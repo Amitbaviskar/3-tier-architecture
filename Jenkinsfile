@@ -25,13 +25,19 @@ pipeline {
                 git branch: 'main', url: 'https://github.com/Amitbaviskar/3-tier-architecture.git'
             }
         }
-
-        stage('Terraform Init') {
+        
+        stage('Clean Terraform Cache') {
             steps {
                 sh '''
                     rm -rf .terraform
-                    terraform init -input=false -no-color
+                    rm -f .terraform.lock.hcl
                 '''
+            }
+        }
+
+        stage('Terraform Init') {
+            steps {
+                    terraform init -input=false -no-color
             }
         }
 
