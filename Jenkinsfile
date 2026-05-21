@@ -4,6 +4,7 @@ pipeline {
      options {
         skipDefaultCheckout(true)
         timestamps()
+        timeout(time: 40, unit: 'MINUTES')
     }
 
      environment {
@@ -48,7 +49,7 @@ pipeline {
 
         stage('Terraform Plan') {
             steps {
-                sh 'terraform plan -no-color'
+                sh 'terraform init -input=false -no-color'
             }
         }
 
